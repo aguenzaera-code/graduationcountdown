@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balingasa High School Graduation Countdown</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            height: 100%;
+            width: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+            width: 100%;
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            /* Background fills the full viewport on every device */
+            /* fixed attachment is used on desktop; overridden to scroll on mobile below */
+            background: url("gradpic.jpg") center top / cover no-repeat fixed;
+        }
+
+
+        /* ── Main content ── */
+        .content {
+            position: relative;
+            z-index: 10;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(16px, 4vw, 30px) 20px clamp(24px, 5vh, 50px);
+            text-align: center;
+            gap: 0;
+            width: 100%;
+            /* Prevents content from stretching on 4K / ultra-wide screens */
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .school-name {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: clamp(1.6rem, 6vw, 4rem);
+            color: #ffffff;
+            text-shadow:
+                2px 2px 0 rgba(0, 0, 30, 0.45),
+                0 0 30px rgba(255, 255, 255, 0.25);
+            letter-spacing: 2px;
+            line-height: 1.1;
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            color: #d4a61b;
+            letter-spacing: 3px;
+            margin-bottom: 18px;
+            text-shadow:
+                2px 2px 0 rgba(0, 0, 30, 0.45),
+                0 0 30px rgba(255, 255, 255, 0.25);
+        }
+
+        /* Double divider line */
+        .divider {
+            width: min(620px, 90%);
+            margin: 0 auto clamp(16px, 4vh, 40px);
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .divider-line-top {
+            height: 4px;
+            background: #1a2fc4;
+            border-radius: 2px;
+        }
+
+        .divider-line-bottom {
+            height: 2px;
+            background: rgba(26, 47, 196, 0.5);
+            border-radius: 2px;
+        }
+
+        /* ── Countdown flip-card style ── */
+        .countdown {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: clamp(4px, 1vw, 8px);
+            margin-bottom: clamp(16px, 4vh, 40px);
+            flex-wrap: wrap;
+        }
+
+        .time-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .digits {
+            display: flex;
+            gap: 6px;
+        }
+
+        .digit-box {
+            background: rgba(80, 75, 100, 0.82);
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            width: clamp(58px, 8vw, 84px);
+            height: clamp(72px, 10vw, 104px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            box-shadow:
+                0 4px 12px rgba(0, 0, 0, 0.4),
+                inset 0 -3px 0 rgba(0, 0, 0, 0.25);
+            position: relative;
+        }
+
+        /* Horizontal crease line in the middle of each box */
+        .digit-box::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: rgba(0, 0, 0, 0.25);
+            transform: translateY(-50%);
+        }
+
+        .time-label {
+            font-style: italic;
+            font-size: clamp(0.75rem, 1.5vw, 1rem);
+            color: #e8e8e8;
+            letter-spacing: 2px;
+            font-weight: 1000;
+            text-shadow:
+                1.2px 1.5px 0 rgba(77, 76, 76, 0.45),
+                0 0 30px rgba(255, 255, 255, 0.25);
+        }
+
+        /* Dot separator */
+        .dot-sep {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: #d4a200;
+            margin-top: clamp(16px, 2.5vw, 28px);
+            line-height: 1;
+            align-self: flex-start;
+        }
+
+        /* ── Footer pill ── */
+        .footer-pill {
+            background: #0f1e8a;
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: clamp(0.85rem, 1.8vw, 1.1rem);
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(247, 247, 247, 0.541),
+                         0 0 20px rgba(255, 255, 255, 0.425);
+            padding: 12px 36px;
+            border-radius: 50px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 20px rgba(0, 0, 60, 0.5);
+        }
+
+        .photo-credit {
+            margin-top: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.65);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            }
+
+        /* ── Responsive tweaks ── */
+
+        /* Tablet portrait & large phones */
+        @media (max-width: 768px) {
+            .subtitle {
+                letter-spacing: 2px;
+            }
+        }
+
+        /* Small phones – portrait */
+        @media (max-width: 480px) {
+            .digit-box {
+                border-radius: 10px;
+            }
+
+            .countdown {
+                gap: 3px;
+            }
+
+            .dot-sep {
+                font-size: 1.6rem;
+                margin-top: 14px;
+            }
+
+            .footer-pill {
+                padding: 10px 20px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Fix: background-attachment:fixed is broken on iOS Safari / most mobile browsers */
+        @media (max-width: 1024px) {
+            body {
+                background-attachment: scroll;
+            }
+        }
+
+        /* Very small phones (e.g. iPhone SE / Galaxy A series at 320px) */
+        @media (max-width: 360px) {
+            .footer-pill {
+                padding: 8px 14px;
+                font-size: 0.72rem;
+                letter-spacing: 0.5px;
+            }
+
+            .school-name {
+                letter-spacing: 1px;
+            }
+        }
+
+        /* Landscape phones – prevent vertical overflow */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .school-name {
+                font-size: clamp(1.2rem, 4vw, 2rem);
+                margin-bottom: 2px;
+            }
+
+            .subtitle {
+                font-size: clamp(0.7rem, 2vw, 1rem);
+                margin-bottom: 8px;
+            }
+
+            .divider {
+                margin-bottom: 10px;
+            }
+
+            .countdown {
+                margin-bottom: 10px;
+            }
+
+            .digit-box {
+                font-size: clamp(1.2rem, 3vw, 2rem);
+                width: clamp(38px, 6vw, 56px);
+                height: clamp(46px, 7vw, 68px);
+                border-radius: 8px;
+            }
+
+            .dot-sep {
+                font-size: 1.2rem;
+                margin-top: 10px;
+            }
+
+            .footer-pill {
+                padding: 8px 18px;
+                font-size: 0.75rem;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+
+
+
+    <!-- Main content -->
+    <div class="content">
+
+        <div class="school-name">BALINGASA HIGH SCHOOL</div>
+        <div class="subtitle">2026 GRADUATION COUNTDOWN!</div>
+
+        <div class="divider">
+            <div class="divider-line-top"></div>
+            <div class="divider-line-bottom"></div>
+        </div>
+
+        <!-- Countdown: days · minutes · seconds (matching image layout) -->
+        <div class="countdown">
+
+            <!-- Days -->
+            <div class="time-group">
+                <div class="digits">
+                    <div class="digit-box" id="days-tens">0</div>
+                    <div class="digit-box" id="days-ones">0</div>
+                </div>
+                <div class="time-label">days</div>
+            </div>
+
+            <div class="dot-sep">·</div>
+
+            <!-- Hours -->
+            <div class="time-group">
+                <div class="digits">
+                    <div class="digit-box" id="hours-tens">0</div>
+                    <div class="digit-box" id="hours-ones">0</div>
+                </div>
+                <div class="time-label">hours</div>
+            </div>
+
+            <div class="dot-sep">·</div>
+
+            <!-- Minutes -->
+            <div class="time-group">
+                <div class="digits">
+                    <div class="digit-box" id="minutes-tens">0</div>
+                    <div class="digit-box" id="minutes-ones">0</div>
+                </div>
+                <div class="time-label">minutes</div>
+            </div>
+
+            <div class="dot-sep">·</div>
+
+            <!-- Seconds -->
+            <div class="time-group">
+                <div class="digits">
+                    <div class="digit-box" id="seconds-tens">0</div>
+                    <div class="digit-box" id="seconds-ones">0</div>
+                </div>
+                <div class="time-label">seconds</div>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="footer-pill">Getting closer to the moment of triumph!</div>
+        <div class="photo-credit">Photo &nbsp;|&nbsp; Philippine Star</div>
+
+    </div><!-- /.content -->
+
+    <script>
+        const graduationDate = new Date("March 31, 2026 08:00:00").getTime();
+
+        function pad(n) {
+            return String(n).padStart(2, '0');
+        }
+
+        function setDigits(tensId, onesId, value) {
+            const str = pad(value);
+            // Handle values > 99 (e.g. days at the start of countdown)
+            // Show the full number in the tens box if it overflows two digits
+            if (str.length > 2) {
+                document.getElementById(tensId).textContent = str.slice(0, -1);
+                document.getElementById(onesId).textContent = str[str.length - 1];
+            } else {
+                document.getElementById(tensId).textContent = str[0];
+                document.getElementById(onesId).textContent = str[1];
+            }
+        }
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = graduationDate - now;
+
+            if (distance <= 0) {
+                // Graduation day!
+                document.querySelector('.content').innerHTML =
+                    "<h1 style='font-family:Montserrat,sans-serif;font-size:clamp(2rem,5vw,3.5rem);color:#fff;text-shadow:0 0 30px rgba(255,200,0,0.8);'>" +
+                    "🎉 Congratulations Graduates! 🎉</h1>" +
+                    "<p style='margin-top:20px;color:#f5c842;font-size:1.2rem;letter-spacing:2px;'>Balingasa High School · Class of 2026</p>";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            setDigits('days-tens', 'days-ones', days);
+            setDigits('hours-tens', 'hours-ones', hours);
+            setDigits('minutes-tens', 'minutes-ones', minutes);
+            setDigits('seconds-tens', 'seconds-ones', seconds);
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+
+</body>
+
+</html>
